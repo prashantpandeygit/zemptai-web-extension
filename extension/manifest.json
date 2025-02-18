@@ -2,7 +2,7 @@
   "minimum_edge_version": "88.0.702.0",
   "manifest_version": 2,
   "name": "zemptAI",
-  "version": "1.0",
+  "version": "3.0",
   "author": "Prashant Pandey",
   "description": "Get AI-powered explanations for selected text using right-click menu.",
   "permissions": ["activeTab", "contextMenus","http://localhost:8000","https://zemptai-web-extension.onrender.com","https://zemptai-web-extension.onrender.com/explain", "scripting"],
