@@ -26,7 +26,7 @@ async def health_check():
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*", "chrome-extension://egbcmieinjinhneapdihglechpgddkln", "https://zemptai-web-extension.onrender.com/", "https://zemptai-web-extension.onrender.com/explain"],
+    allow_origins=["*", "chrome-extension://agfnjnckbeemdejeojjhdmifihdafoep", "https://zemptai-web-extension.onrender.com/", "https://zemptai-web-extension.onrender.com/explain"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
