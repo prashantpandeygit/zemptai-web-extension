@@ -5,7 +5,7 @@
   "version": "1.0",
   "author": "Prashant Pandey",
   "description": "Get AI-powered explanations for selected text using right-click menu.",
-  "permissions": ["activeTab", "contextMenus","http://localhost:8000","https://zemptai-web-extension.onrender.com/", "scripting"],
+  "permissions": ["activeTab", "contextMenus","http://localhost:8000","https://zemptai-web-extension.onrender.com","https://zemptai-web-extension.onrender.com/explain", "scripting"],
   "background": {
     "scripts": ["background.js"],
     "persistent": false

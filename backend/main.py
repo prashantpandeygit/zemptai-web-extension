@@ -1,13 +1,17 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
 import os
+import requests
+import threading
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = FastAPI()
+
 @app.get("/")
 async def health_check():
     return {
@@ -18,7 +22,6 @@ async def health_check():
             "explain": "/explain (POST)"
         }
     }
-
 
 # CORS Configuration
 app.add_middleware(
@@ -85,6 +88,21 @@ async def explain(request: ChatRequest):
     except Exception as e:
         print(f"Server Error: {str(e)}")
         return {"explanation": "Whoops! Try again soon!"}
+
+URL = "https://zemptai-web-extension.onrender.com/"  
+
+def keep_alive():
+    while True:
+        try:
+            response = requests.get(URL)
+            print(f"Keep-alive ping sent. Status Code: {response.status_code}")
+        except requests.RequestException as e:
+            print(f"Failed to ping {URL}: {e}")
+        time.sleep(600)  
+
+@app.on_event("startup")
+async def start_keep_alive():
+    threading.Thread(target=keep_alive, daemon=True).start()
 
 if __name__ == "__main__":
     import uvicorn
