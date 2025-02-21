@@ -10,6 +10,22 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from datetime import datetime
+
+
+def keep_alive():
+    while True:
+        try:
+            url = "https://zemptai-web-extension.onrender.com"
+            response = requests.get(url)
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(f"[{current_time}] Keep-alive ping sent. Status: {response.status_code}")
+        except Exception as e:
+            print(f"[{datetime.now()}] Ping failed: {str(e)}")
+        time.sleep(840)  # 14 minutes
+keep_alive_thread = threading.Thread(target=keep_alive, daemon=True)
+keep_alive_thread.start()
+
 app = FastAPI()
 
 @app.get("/")
@@ -89,20 +105,6 @@ async def explain(request: ChatRequest):
         print(f"Server Error: {str(e)}")
         return {"explanation": "Whoops! Try again soon!"}
 
-URL = "https://zemptai-web-extension.onrender.com/"  
-
-def keep_alive():
-    while True:
-        try:
-            response = requests.get(URL)
-            print(f"Keep-alive ping sent. Status Code: {response.status_code}")
-        except requests.RequestException as e:
-            print(f"Failed to ping {URL}: {e}")
-        time.sleep(600)  
-
-@app.on_event("startup")
-async def start_keep_alive():
-    threading.Thread(target=keep_alive, daemon=True).start()
 
 if __name__ == "__main__":
     import uvicorn
